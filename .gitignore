@@ -1,0 +1,22 @@
+# Environment variables
+.env
+.env.local
+.env.*
+
+# Node modules
+node_modules/
+
+# Sensitive files
+Login credentials.txt
+
+# Angular build output
+dist/
+.angular/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

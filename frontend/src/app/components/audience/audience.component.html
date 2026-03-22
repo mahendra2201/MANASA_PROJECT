@@ -1,0 +1,84 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Audience Insights</h1>
+    <p>Understand who is engaging with your content</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-state"><div class="spinner-lg"></div><p>Loading insights...</p></div>
+  <div *ngIf="error" class="error-state">{{ error }}</div>
+
+  <ng-container *ngIf="data && !loading">
+    <div class="insights-grid">
+
+      <!-- Age Groups -->
+      <div class="card">
+        <div class="card-header"><h3>By Age Group</h3></div>
+        <div class="bar-list">
+          <div class="bar-row" *ngFor="let a of data.byAge">
+            <span class="bar-label">{{ a.age_group }}</span>
+            <div class="bar-track">
+              <div class="bar-fill purple" [style.width.%]="(a.total_engagement / maxEngagement(data.byAge) * 100)"></div>
+            </div>
+            <span class="bar-val">{{ formatNumber(a.total_engagement) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="card">
+        <div class="card-header"><h3>By Gender</h3></div>
+        <div class="donut-list">
+          <div class="donut-row" *ngFor="let g of data.byGender">
+            <div class="donut-info">
+              <span class="donut-dot" [class]="g.gender"></span>
+              <span class="donut-label">{{ g.gender | titlecase }}</span>
+            </div>
+            <div class="donut-bar-track">
+              <div class="donut-bar-fill" [class]="g.gender" [style.width.%]="(g.total_engagement / maxEngagement(data.byGender) * 100)"></div>
+            </div>
+            <span class="donut-pct">{{ g.avg_pct }}%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Device -->
+      <div class="card">
+        <div class="card-header"><h3>By Device</h3></div>
+        <div class="device-cards">
+          <div class="device-card" *ngFor="let d of data.byDevice">
+            <div class="device-icon" [class]="d.device_type">
+              <svg *ngIf="d.device_type === 'mobile'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+              <svg *ngIf="d.device_type === 'desktop'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <svg *ngIf="d.device_type === 'tablet'" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <div class="device-name">{{ d.device_type | titlecase }}</div>
+            <div class="device-val">{{ formatNumber(d.total_engagement) }}</div>
+            <div class="device-pct">{{ d.avg_pct }}%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Locations -->
+      <div class="card">
+        <div class="card-header"><h3>Top Locations</h3></div>
+        <div class="location-list">
+          <div class="location-row" *ngFor="let l of data.byLocation; let i = index">
+            <span class="loc-rank">{{ i + 1 }}</span>
+            <span class="loc-name">{{ l.location }}</span>
+            <div class="loc-bar-track">
+              <div class="loc-bar-fill" [style.width.%]="(l.total_engagement / maxEngagement(data.byLocation) * 100)"></div>
+            </div>
+            <span class="loc-val">{{ formatNumber(l.total_engagement) }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </ng-container>
+</div>

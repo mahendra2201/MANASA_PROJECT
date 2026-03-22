@@ -1,0 +1,166 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Real-time overview of your social media performance</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-lg"></div>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <div *ngIf="error" class="error-state">{{ error }}</div>
+
+  <ng-container *ngIf="data && !loading">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon purple">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Posts</span>
+          <span class="kpi-value">{{ data.total_posts }}</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon teal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Campaigns</span>
+          <span class="kpi-value">{{ data.total_campaigns }}</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon blue">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Impressions</span>
+          <span class="kpi-value">{{ formatNumber(data.total_impressions) }}</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon green">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Avg Engagement Rate</span>
+          <span class="kpi-value">{{ data.avg_engagement_rate }}%</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon orange">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Likes</span>
+          <span class="kpi-value">{{ formatNumber(data.total_likes) }}</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon pink">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="kpi-info">
+          <span class="kpi-label">Total Comments</span>
+          <span class="kpi-value">{{ formatNumber(data.total_comments) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Two columns -->
+    <div class="two-col">
+
+      <!-- Platform Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Platform Performance</h3>
+        </div>
+        <div class="platform-list">
+          <div class="platform-row" *ngFor="let p of data.platform_breakdown">
+            <div class="platform-name">
+              <span class="platform-dot" [class]="p.platform.toLowerCase()"></span>
+              {{ p.platform }}
+            </div>
+            <div class="platform-stats">
+              <span>{{ formatNumber(p.total_impressions) }} impressions</span>
+              <span class="eng-rate">{{ p.avg_engagement_rate }}% eng</span>
+            </div>
+            <div class="platform-bar-wrap">
+              <div class="platform-bar" [style.width.%]="(p.total_impressions / data.total_impressions * 100)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Campaigns -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Top Campaigns</h3>
+        </div>
+        <div class="campaign-list">
+          <div class="campaign-row" *ngFor="let c of data.top_campaigns; let i = index">
+            <div class="rank">{{ i + 1 }}</div>
+            <div class="campaign-info">
+              <span class="campaign-name">{{ c.name }}</span>
+              <span class="campaign-status" [class]="c.status">{{ c.status }}</span>
+            </div>
+            <div class="campaign-metric">
+              <span class="metric-val">{{ formatNumber(c.total_engagement) }}</span>
+              <span class="metric-lbl">engagements</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Posts -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Recent Posts</h3>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Content</th>
+              <th>Platform</th>
+              <th>Type</th>
+              <th>Likes</th>
+              <th>Impressions</th>
+              <th>Eng. Rate</th>
+              <th>Posted</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let post of data.recent_posts">
+              <td class="content-cell">{{ post.content | slice:0:60 }}{{ post.content?.length > 60 ? '...' : '' }}</td>
+              <td><span class="badge" [class]="post.platform.toLowerCase()">{{ post.platform }}</span></td>
+              <td>{{ post.media_type }}</td>
+              <td>{{ formatNumber(post.likes) }}</td>
+              <td>{{ formatNumber(post.impressions) }}</td>
+              <td>{{ post.engagement_rate }}%</td>
+              <td>{{ post.posted_at | date:'MMM d, y' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

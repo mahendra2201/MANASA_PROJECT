@@ -1,0 +1,68 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Campaigns</h1>
+    <p>Manage and monitor all your marketing campaigns</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-lg"></div><p>Loading campaigns...</p>
+  </div>
+  <div *ngIf="error" class="error-state">{{ error }}</div>
+
+  <ng-container *ngIf="!loading && !error">
+    <div class="campaigns-grid">
+      <div class="campaign-card" *ngFor="let c of campaigns" (click)="viewCampaign(c.id)">
+        <div class="card-top">
+          <div class="campaign-title">{{ c.name }}</div>
+          <span class="status-badge" [class]="c.status">{{ c.status }}</span>
+        </div>
+        <p class="description">{{ c.description }}</p>
+        <div class="meta-row">
+          <span>{{ c.start_date | date:'MMM d' }} - {{ c.end_date | date:'MMM d, y' }}</span>
+          <span class="budget">${{ c.budget | number:'1.0-0' }}</span>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><span class="val">{{ c.post_count }}</span><span class="lbl">Posts</span></div>
+          <div class="stat"><span class="val">{{ formatNumber(c.total_engagement) }}</span><span class="lbl">Engagements</span></div>
+          <div class="stat"><span class="val">{{ c.avg_engagement_rate }}%</span><span class="lbl">Eng. Rate</span></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" [style.width.%]="getBudgetUsed(c)"></div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" *ngIf="selectedCampaign" (click)="closeDetail()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ selectedCampaign.name }}</h2>
+        <button (click)="closeDetail()" class="close-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <p class="modal-desc">{{ selectedCampaign.description }}</p>
+      <div class="modal-meta">
+        <div><span>Status</span><strong class="status-badge" [class]="selectedCampaign.status">{{ selectedCampaign.status }}</strong></div>
+        <div><span>Budget</span><strong>${{ selectedCampaign.budget | number:'1.0-0' }}</strong></div>
+        <div><span>Target</span><strong>{{ selectedCampaign.target_audience }}</strong></div>
+        <div><span>Objective</span><strong>{{ selectedCampaign.objectives }}</strong></div>
+      </div>
+      <h4>Posts</h4>
+      <div class="posts-list">
+        <div class="post-row" *ngFor="let p of selectedCampaign.posts">
+          <span class="badge" [class]="p.platform.toLowerCase()">{{ p.platform }}</span>
+          <span class="post-content">{{ p.content | slice:0:80 }}...</span>
+          <div class="post-kpis">
+            <span>{{ formatNumber(p.likes) }} likes</span>
+            <span>{{ formatNumber(p.impressions) }} impr.</span>
+            <span>{{ p.engagement_rate }}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
