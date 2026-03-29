@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MediaPulse Insights – Project Documentation</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; margin: 60px auto; max-width: 900px; color: #222; line-height: 1.7; }
+    h1 { font-size: 2.2em; color: #6C63FF; border-bottom: 3px solid #6C63FF; padding-bottom: 10px; }
+    h2 { font-size: 1.5em; color: #4a4a9e; margin-top: 40px; border-left: 5px solid #6C63FF; padding-left: 12px; }
+    h3 { font-size: 1.15em; color: #333; margin-top: 24px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+    th { background: #6C63FF; color: white; padding: 10px 14px; text-align: left; }
+    td { border: 1px solid #ddd; padding: 9px 14px; }
+    tr:nth-child(even) td { background: #f5f4ff; }
+    code, pre { background: #f0f0f0; border-radius: 4px; padding: 2px 7px; font-family: Consolas, monospace; font-size: 0.95em; }
+    pre { padding: 14px 18px; overflow-x: auto; border-left: 4px solid #6C63FF; }
+    .badge { display: inline-block; background: #6C63FF; color: white; border-radius: 12px; padding: 2px 12px; font-size: 0.82em; margin: 2px; }
+    .section-box { background: #f8f7ff; border: 1px solid #ddd; border-radius: 8px; padding: 16px 22px; margin: 16px 0; }
+    ul li { margin-bottom: 6px; }
+    .cover { text-align: center; padding: 60px 0 40px; }
+    .cover h1 { font-size: 3em; border: none; }
+    .cover p { font-size: 1.1em; color: #666; }
+  </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>MediaPulse Insights</h1>
+  <p><strong>Project Documentation</strong></p>
+  <p>Social Media Analytics &amp; Campaign Management Platform</p>
+  <p style="color:#6C63FF; font-size:1em;">Version 1.0 &nbsp;|&nbsp; March 2026</p>
+</div>
+
+<hr/>
+
+<!-- 1. PROJECT OVERVIEW -->
+<h2>1. Project Overview</h2>
+<div class="section-box">
+  <p><strong>MediaPulse Insights</strong> is a full-stack web application designed for marketing teams to monitor, manage, and analyze their social media campaigns across multiple platforms — Facebook, Twitter, Instagram, and LinkedIn.</p>
+  <p>The platform provides real-time KPI tracking, audience demographic insights, campaign management, and analytics dashboards — all from a single unified interface.</p>
+</div>
+
+<h3>Core Goals</h3>
+<ul>
+  <li>Centralize social media performance data across all platforms</li>
+  <li>Provide role-based access for different team members</li>
+  <li>Track KPIs: likes, shares, comments, impressions, reach, CTR, engagement rate</li>
+  <li>Analyze audience demographics (age, gender, location, device)</li>
+  <li>Manage marketing campaigns from creation to completion</li>
+</ul>
+
+<!-- 2. TECH STACK -->
+<h2>2. Technology Stack</h2>
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Version</th></tr>
+  <tr><td>Frontend</td><td>Angular</td><td>17.0.0</td></tr>
+  <tr><td>Frontend Language</td><td>TypeScript</td><td>5.2.2</td></tr>
+  <tr><td>Backend</td><td>Spring Boot (Java)</td><td>3.2.3</td></tr>
+  <tr><td>Backend Language</td><td>Java</td><td>17</td></tr>
+  <tr><td>Database</td><td>MySQL</td><td>8.x</td></tr>
+  <tr><td>Authentication</td><td>JWT (JSON Web Token)</td><td>JJWT 0.12.3</td></tr>
+  <tr><td>Security</td><td>Spring Security + BCrypt</td><td>–</td></tr>
+  <tr><td>ORM</td><td>Spring Data JPA / Hibernate</td><td>–</td></tr>
+  <tr><td>Build Tool (Backend)</td><td>Apache Maven</td><td>3.x</td></tr>
+  <tr><td>Build Tool (Frontend)</td><td>Angular CLI</td><td>17.0.0</td></tr>
+  <tr><td>IDE</td><td>VS Code / IntelliJ IDEA</td><td>–</td></tr>
+</table>
+
+<!-- 3. PROJECT STRUCTURE -->
+<h2>3. Project Structure</h2>
+<pre>
+mediapulse/
+├── frontend/                        # Angular 17 Frontend
+│   └── src/app/
+│       ├── components/
+│       │   ├── login/               # Login page
+│       │   ├── signup/              # Registration page
+│       │   ├── dashboard/           # Main dashboard
+│       │   ├── campaigns/           # Campaign management
+│       │   ├── analytics/           # Analytics &amp; KPIs
+│       │   ├── audience/            # Audience insights
+│       │   └── layout/              # Shared layout (sidebar)
+│       ├── services/
+│       │   ├── auth.service.ts      # Login / Register / Logout
+│       │   ├── dashboard.service.ts
+│       │   ├── campaign.service.ts
+│       │   └── analytics.service.ts
+│       ├── guards/auth.guard.ts     # Protects private routes
+│       ├── interceptors/            # Adds JWT to every request
+│       └── models/user.model.ts     # TypeScript interfaces
+│
+├── backend-spring/                  # Spring Boot Backend
+│   └── src/main/java/com/mediapulse/
+│       ├── controller/              # REST API endpoints
+│       ├── service/                 # Business logic
+│       ├── entity/                  # JPA database entities
+│       ├── repository/              # Database queries
+│       ├── security/                # JWT filter &amp; Spring Security
+│       └── dto/                     # Request/Response objects
+│
+├── database/
+│   └── schema.sql                   # Full DB schema + mock data
+│
+└── documentation/                   # Project documentation (this folder)
+</pre>
+
+<!-- 4. DATABASE DESIGN -->
+<h2>4. Database Design</h2>
+<p>Database name: <code>mediapulse_db</code> (MySQL)</p>
+<table>
+  <tr><th>#</th><th>Table Name</th><th>Description</th></tr>
+  <tr><td>1</td><td><code>users</code></td><td>Stores all user accounts with roles and hashed passwords</td></tr>
+  <tr><td>2</td><td><code>social_media_platforms</code></td><td>Connected platforms (Facebook, Twitter, Instagram, LinkedIn)</td></tr>
+  <tr><td>3</td><td><code>campaigns</code></td><td>Marketing campaigns with budget, dates, status, and objectives</td></tr>
+  <tr><td>4</td><td><code>campaign_platforms</code></td><td>Junction table linking campaigns to platforms (many-to-many)</td></tr>
+  <tr><td>5</td><td><code>posts</code></td><td>Individual social media posts with media type and URLs</td></tr>
+  <tr><td>6</td><td><code>kpis</code></td><td>Engagement metrics per post: likes, shares, impressions, CTR, etc.</td></tr>
+  <tr><td>7</td><td><code>audience_insights</code></td><td>Demographic data: age group, gender, location, device type</td></tr>
+  <tr><td>8</td><td><code>reports</code></td><td>Generated analytics reports stored as JSON</td></tr>
+</table>
+
+<h3>User Roles</h3>
+<table>
+  <tr><th>Role</th><th>Description</th></tr>
+  <tr><td><code>admin</code></td><td>Full system access</td></tr>
+  <tr><td><code>marketing_team</code></td><td>Manage campaigns and view analytics</td></tr>
+  <tr><td><code>content_creator</code></td><td>Create and manage posts</td></tr>
+  <tr><td><code>executive</code></td><td>View reports and dashboards</td></tr>
+  <tr><td><code>it_support</code></td><td>System configuration and support</td></tr>
+</table>
+
+<!-- 5. AUTHENTICATION FLOW -->
+<h2>5. Authentication Flow</h2>
+<div class="section-box">
+  <ol>
+    <li>User visits <strong>/signup</strong> → fills in Full Name, Email, Password, Role</li>
+    <li>Frontend sends <code>POST /api/auth/register</code> to Spring Boot backend</li>
+    <li>Backend validates input, hashes password with <strong>BCrypt</strong>, saves user to <code>users</code> table</li>
+    <li>Frontend shows success message → redirects user to <strong>/login</strong></li>
+    <li>User logs in at <strong>/login</strong> with their credentials</li>
+    <li>Backend verifies password hash → generates a <strong>JWT token</strong> (valid 7 days)</li>
+    <li>Token is stored in <code>localStorage</code> on the browser</li>
+    <li>All subsequent API requests include the token in the <code>Authorization: Bearer</code> header</li>
+    <li>Protected routes are guarded by <code>AuthGuard</code> (Angular) and <code>JwtAuthenticationFilter</code> (Spring Boot)</li>
+  </ol>
+</div>
+
+<!-- 6. API ENDPOINTS -->
+<h2>6. API Endpoints</h2>
+<table>
+  <tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Auth Required</th></tr>
+  <tr><td>POST</td><td>/api/auth/register</td><td>Create new user account</td><td>No</td></tr>
+  <tr><td>POST</td><td>/api/auth/login</td><td>Login and receive JWT token</td><td>No</td></tr>
+  <tr><td>GET</td><td>/api/auth/me</td><td>Get current logged-in user</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/dashboard/summary</td><td>Dashboard stats &amp; recent posts</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/campaigns</td><td>List all campaigns</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/campaigns/:id</td><td>Get single campaign details</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/analytics/kpis</td><td>KPI metrics data</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/analytics/platforms</td><td>Platform performance stats</td><td>Yes</td></tr>
+  <tr><td>GET</td><td>/api/audience/insights</td><td>Audience demographic data</td><td>Yes</td></tr>
+</table>
+
+<!-- 7. FRONTEND PAGES -->
+<h2>7. Frontend Pages</h2>
+<table>
+  <tr><th>Route</th><th>Component</th><th>Access</th><th>Description</th></tr>
+  <tr><td>/signup</td><td>SignupComponent</td><td>Public</td><td>User registration form</td></tr>
+  <tr><td>/login</td><td>LoginComponent</td><td>Public</td><td>User login form</td></tr>
+  <tr><td>/dashboard</td><td>DashboardComponent</td><td>Protected</td><td>Main overview &amp; summary stats</td></tr>
+  <tr><td>/campaigns</td><td>CampaignsComponent</td><td>Protected</td><td>Campaign list and details</td></tr>
+  <tr><td>/analytics</td><td>AnalyticsComponent</td><td>Protected</td><td>KPI charts and platform stats</td></tr>
+  <tr><td>/audience</td><td>AudienceComponent</td><td>Protected</td><td>Audience demographics</td></tr>
+</table>
+
+<!-- 8. HOW TO RUN -->
+<h2>8. How to Run the Project</h2>
+
+<h3>Prerequisites — Install These First</h3>
+<ul>
+  <li><strong>Java JDK 17</strong> — for Spring Boot backend</li>
+  <li><strong>Apache Maven</strong> — to build Spring Boot</li>
+  <li><strong>Node.js (v18+) &amp; npm</strong> — for Angular frontend</li>
+  <li><strong>Angular CLI</strong> — <code>npm install -g @angular/cli</code></li>
+  <li><strong>MySQL 8.x</strong> — database server</li>
+  <li><strong>VS Code</strong> or <strong>IntelliJ IDEA</strong> — IDE</li>
+</ul>
+
+<h3>Step 1 — Setup the Database</h3>
+<pre>
+-- Open MySQL and run:
+mysql -u root -p
+source C:/Users/Mahendra_Mannem/mediapulse/database/schema.sql
+</pre>
+
+<h3>Step 2 — Run the Spring Boot Backend (Terminal 1)</h3>
+<pre>
+cd C:\Users\Mahendra_Mannem\mediapulse\backend-spring
+mvn spring-boot:run
+</pre>
+<p>Backend starts at: <strong>http://localhost:3000</strong></p>
+
+<h3>Step 3 — Run the Angular Frontend (Terminal 2)</h3>
+<pre>
+cd C:\Users\Mahendra_Mannem\mediapulse\frontend
+npm install
+npm start
+</pre>
+<p>Frontend starts at: <strong>http://localhost:4200</strong></p>
+
+<h3>Step 4 — Open in Browser</h3>
+<p>Navigate to: <strong>http://localhost:4200</strong></p>
+<p>You will land on the <strong>Signup</strong> page → create an account → redirected to <strong>Login</strong> → log in → enter <strong>Dashboard</strong>.</p>
+
+<!-- 9. LOGIN CREDENTIALS -->
+<h2>9. Default Login Credentials</h2>
+<table>
+  <tr><th>Full Name</th><th>Email</th><th>Password</th><th>Role</th></tr>
+  <tr><td>Admin User</td><td>admin@mediapulse.com</td><td>Password@123</td><td>Admin</td></tr>
+  <tr><td>Sarah Johnson</td><td>sarah@mediapulse.com</td><td>Password@123</td><td>Marketing Team</td></tr>
+  <tr><td>David Lee</td><td>david@mediapulse.com</td><td>Password@123</td><td>Content Creator</td></tr>
+  <tr><td>Emily Chen</td><td>emily@mediapulse.com</td><td>Password@123</td><td>Executive</td></tr>
+  <tr><td>Mark Thompson</td><td>mark@mediapulse.com</td><td>Password@123</td><td>IT Support</td></tr>
+</table>
+
+<!-- 10. SECURITY -->
+<h2>10. Security</h2>
+<ul>
+  <li>Passwords hashed using <strong>BCrypt</strong> (cost factor 10) — never stored in plain text</li>
+  <li><strong>JWT tokens</strong> expire after 7 days</li>
+  <li>All protected API routes require <code>Authorization: Bearer &lt;token&gt;</code> header</li>
+  <li>Angular <code>AuthGuard</code> prevents unauthenticated users from accessing protected pages</li>
+  <li>Spring Security <code>JwtAuthenticationFilter</code> validates every incoming request</li>
+  <li>CORS configured to allow only <code>http://localhost:4200</code></li>
+</ul>
+
+<hr/>
+<p style="text-align:center; color:#aaa; font-size:0.85em;">MediaPulse Insights &nbsp;|&nbsp; Project Documentation &nbsp;|&nbsp; 2026</p>
+
+</body>
+</html>

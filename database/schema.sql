@@ -10,7 +10,7 @@ USE mediapulse_db;
 -- TABLE: users
 -- Stores all users (marketing teams, executives, creators, IT)
 -- ============================================================
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id            INT AUTO_INCREMENT PRIMARY KEY,
     full_name     VARCHAR(100)  NOT NULL,
     email         VARCHAR(100)  UNIQUE NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE users (
 -- TABLE: social_media_platforms
 -- Stores connected platform details (Facebook, Twitter, etc.)
 -- ============================================================
-CREATE TABLE social_media_platforms (
+CREATE TABLE IF NOT EXISTS social_media_platforms (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     name         VARCHAR(50)  NOT NULL,
     api_key      VARCHAR(255),
@@ -42,7 +42,7 @@ CREATE TABLE social_media_platforms (
 -- TABLE: campaigns
 -- Stores marketing campaign information
 -- ============================================================
-CREATE TABLE campaigns (
+CREATE TABLE IF NOT EXISTS campaigns (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     name            VARCHAR(200) NOT NULL,
     description     TEXT,
@@ -63,7 +63,7 @@ CREATE TABLE campaigns (
 -- TABLE: campaign_platforms
 -- Junction table: campaigns can run across multiple platforms
 -- ============================================================
-CREATE TABLE campaign_platforms (
+CREATE TABLE IF NOT EXISTS campaign_platforms (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     campaign_id INT NOT NULL,
     platform_id INT NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE campaign_platforms (
 -- TABLE: posts
 -- Stores social media post details per platform
 -- ============================================================
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
     id               INT AUTO_INCREMENT PRIMARY KEY,
     campaign_id      INT,
     platform_id      INT NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE posts (
 -- TABLE: kpis
 -- Stores key performance indicators per post (engagement metrics)
 -- ============================================================
-CREATE TABLE kpis (
+CREATE TABLE IF NOT EXISTS kpis (
     id                INT AUTO_INCREMENT PRIMARY KEY,
     post_id           INT NOT NULL,
     likes             INT          DEFAULT 0,
@@ -114,7 +114,7 @@ CREATE TABLE kpis (
 -- TABLE: audience_insights
 -- Stores audience demographic and behavior data
 -- ============================================================
-CREATE TABLE audience_insights (
+CREATE TABLE IF NOT EXISTS audience_insights (
     id               INT AUTO_INCREMENT PRIMARY KEY,
     post_id          INT,
     campaign_id      INT,
@@ -133,7 +133,7 @@ CREATE TABLE audience_insights (
 -- TABLE: reports
 -- Stores generated analytics reports
 -- ============================================================
-CREATE TABLE reports (
+CREATE TABLE IF NOT EXISTS reports (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     title        VARCHAR(200) NOT NULL,
     report_type  ENUM('campaign','platform','audience','engagement') NOT NULL,
@@ -153,37 +153,37 @@ CREATE TABLE reports (
 -- MOCK DATA
 -- ============================================================
 
--- Users (passwords: all are 'Password@123' - bcrypt hashed)
-INSERT INTO users (full_name, email, password_hash, role) VALUES
-('Admin User',     'admin@mediapulse.com',    '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHiy', 'admin'),
-('Sarah Johnson',  'sarah@mediapulse.com',    '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHiy', 'marketing_team'),
-('David Lee',      'david@mediapulse.com',    '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHiy', 'content_creator'),
-('Emily Chen',     'emily@mediapulse.com',    '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHiy', 'executive'),
-('Mark Thompson',  'mark@mediapulse.com',     '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHiy', 'it_support');
+-- Users (passwords: all are 'Password@123' - bcrypt hashed with Spring BCryptPasswordEncoder)
+INSERT IGNORE INTO users (full_name, email, password_hash, role) VALUES
+('Admin User',     'admin@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'admin'),
+('Sarah Johnson',  'sarah@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'marketing_team'),
+('David Lee',      'david@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'content_creator'),
+('Emily Chen',     'emily@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'executive'),
+('Mark Thompson',  'mark@mediapulse.com',     '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'it_support');
 
 -- Social Media Platforms
-INSERT INTO social_media_platforms (name, api_key, account_name, account_id, platform_url) VALUES
+INSERT IGNORE INTO social_media_platforms (name, api_key, account_name, account_id, platform_url) VALUES
 ('Facebook',  'fb_api_key_mock_001',  'MediaPulse Official', 'mp_fb_001',  'https://facebook.com/mediapulse'),
 ('Twitter',   'tw_api_key_mock_002',  'MediaPulse',          'mp_tw_002',  'https://twitter.com/mediapulse'),
 ('Instagram', 'ig_api_key_mock_003',  'mediapulse_ig',       'mp_ig_003',  'https://instagram.com/mediapulse'),
 ('LinkedIn',  'li_api_key_mock_004',  'MediaPulse Insights', 'mp_li_004',  'https://linkedin.com/company/mediapulse');
 
 -- Campaigns
-INSERT INTO campaigns (name, description, start_date, end_date, budget, target_audience, objectives, status, created_by) VALUES
+INSERT IGNORE INTO campaigns (name, description, start_date, end_date, budget, target_audience, objectives, status, created_by) VALUES
 ('Spring Sale 2025',       'Promote spring product launch across all platforms', '2025-03-01', '2025-03-31', 15000.00, 'Age 18-35, tech enthusiasts', 'Increase brand awareness by 20%', 'completed', 2),
 ('Brand Awareness Q2',     'Quarterly brand awareness campaign',                 '2025-04-01', '2025-06-30', 25000.00, 'Age 25-45, professionals',   'Reach 500K new users',           'active',    2),
 ('Product Launch X1',      'New product X1 launch campaign',                    '2025-05-15', '2025-06-15', 10000.00, 'Age 18-40, early adopters',  'Generate 10K pre-orders',        'active',    2),
 ('Holiday Campaign 2025',  'Holiday season marketing push',                      '2025-11-01', '2025-12-31', 50000.00, 'General audience',           'Drive 30% sales uplift',         'draft',     2);
 
 -- Campaign-Platform mapping
-INSERT INTO campaign_platforms (campaign_id, platform_id) VALUES
+INSERT IGNORE INTO campaign_platforms (campaign_id, platform_id) VALUES
 (1,1),(1,2),(1,3),
 (2,1),(2,2),(2,3),(2,4),
 (3,2),(3,3),
 (4,1),(4,2),(4,3),(4,4);
 
 -- Posts
-INSERT INTO posts (campaign_id, platform_id, content, media_type, post_url, external_post_id, posted_at) VALUES
+INSERT IGNORE INTO posts (campaign_id, platform_id, content, media_type, post_url, external_post_id, posted_at) VALUES
 (1, 1, 'Spring is here! Check out our latest collection. #SpringSale #NewArrivals', 'image',  'https://facebook.com/post/001', 'fb_post_001', '2025-03-05 10:00:00'),
 (1, 2, 'Our spring sale is live! 🌸 Tap the link to explore. #SpringSale',         'image',  'https://twitter.com/post/001',  'tw_post_001', '2025-03-05 10:30:00'),
 (1, 3, 'Spring vibes only 🌷 Swipe to see our new arrivals!',                       'reel',   'https://instagram.com/post/001','ig_post_001', '2025-03-06 12:00:00'),
@@ -193,7 +193,7 @@ INSERT INTO posts (campaign_id, platform_id, content, media_type, post_url, exte
 (3, 3, 'Meet X1. A revolution in your hands. Link in bio to pre-order! 🔥',        'reel',   'https://instagram.com/post/003','ig_post_003', '2025-05-16 15:00:00');
 
 -- KPIs (engagement metrics per post)
-INSERT INTO kpis (post_id, likes, shares, comments, impressions, reach, click_through_rate, engagement_rate, saves, video_views) VALUES
+INSERT IGNORE INTO kpis (post_id, likes, shares, comments, impressions, reach, click_through_rate, engagement_rate, saves, video_views) VALUES
 (1, 4520,  980, 312, 85000,  72000, 3.20, 6.84, 210,  NULL),
 (2, 2310,  540, 189, 45000,  38000, 2.85, 6.75, NULL, NULL),
 (3, 8900, 1200, 670, 120000, 98000, 4.10, 9.12, 3400, 45000),
@@ -203,7 +203,7 @@ INSERT INTO kpis (post_id, likes, shares, comments, impressions, reach, click_th
 (7, 12400,1800, 930, 180000,150000, 5.20,11.35, 5100, 98000);
 
 -- Audience Insights
-INSERT INTO audience_insights (post_id, campaign_id, age_group, gender, location, device_type, engagement_count, percentage) VALUES
+INSERT IGNORE INTO audience_insights (post_id, campaign_id, age_group, gender, location, device_type, engagement_count, percentage) VALUES
 (1, 1, '18-24', 'female',  'New York, USA',    'mobile',  1200, 26.5),
 (1, 1, '25-34', 'female',  'Los Angeles, USA', 'mobile',  1500, 33.2),
 (1, 1, '25-34', 'male',    'Chicago, USA',     'desktop',  980, 21.7),

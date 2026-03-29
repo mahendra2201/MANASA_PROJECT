@@ -28,6 +28,9 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {"replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts"}
+              ],
               "budgets": [
                 {"type": "initial", "maximumWarning": "500kb", "maximumError": "1mb"},
                 {"type": "anyComponentStyle", "maximumWarning": "2kb", "maximumError": "4kb"}
@@ -49,7 +52,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {"buildTarget": "mediapulse-frontend:build:production"},
-            "development": {"buildTarget": "mediapulse-frontend:build:development"}
+            "development": {
+              "buildTarget": "mediapulse-frontend:build:development",
+              "proxyConfig": "proxy.conf.json"
+            }
           },
           "defaultConfiguration": "development"
         }

@@ -63,8 +63,8 @@ export class SignupComponent {
     this.auth.register({ full_name, email, password, role }).subscribe({
       next: () => {
         this.isLoading      = false;
-        this.successMessage = 'Account created! Redirecting...';
-        setTimeout(() => this.router.navigate(['/dashboard']), 1500);
+        this.successMessage = 'Account created! Redirecting to login...';
+        setTimeout(() => this.router.navigate(['/login']), 1500);
       },
       error: (err) => {
         this.isLoading    = false;

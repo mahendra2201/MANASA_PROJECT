@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>MediaPulse Insights – Presentation</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Calibri, Arial, sans-serif; background: #1a1a2e; color: #fff; }
+
+    .slide {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      page-break-after: always;
+      border-bottom: 4px solid #6C63FF;
+    }
+
+    /* Slide Themes */
+    .slide-cover   { background: linear-gradient(135deg, #6C63FF 0%, #1a1a2e 100%); text-align: center; }
+    .slide-dark    { background: #1a1a2e; }
+    .slide-purple  { background: linear-gradient(135deg, #2d2d5e 0%, #1a1a2e 100%); }
+    .slide-teal    { background: linear-gradient(135deg, #1a3a4a 0%, #1a1a2e 100%); }
+
+    h1.cover-title { font-size: 3.5em; color: #fff; margin-bottom: 16px; letter-spacing: 2px; }
+    h1.cover-title span { color: #00D4AA; }
+    .cover-sub { font-size: 1.3em; color: #ccc; margin-bottom: 30px; }
+    .cover-tag { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 6px 20px; font-size: 0.9em; margin: 4px; }
+
+    .slide-title { font-size: 2em; color: #6C63FF; margin-bottom: 30px; text-align: center; border-bottom: 2px solid #6C63FF; padding-bottom: 12px; width: 100%; }
+    .slide-title span { color: #00D4AA; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; width: 100%; }
+
+    .card {
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.4);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .card h3 { color: #00D4AA; font-size: 1em; margin-bottom: 10px; }
+    .card p, .card li { font-size: 0.9em; color: #ccc; line-height: 1.6; }
+    .card ul { padding-left: 18px; }
+
+    .tech-badge {
+      display: inline-block;
+      background: rgba(0,212,170,0.15);
+      border: 1px solid #00D4AA;
+      border-radius: 8px;
+      padding: 8px 18px;
+      margin: 6px;
+      font-size: 0.9em;
+      color: #00D4AA;
+    }
+    .tech-badge span { display: block; color: #aaa; font-size: 0.75em; margin-top: 2px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+    th { background: #6C63FF; color: white; padding: 10px 14px; text-align: left; }
+    td { border: 1px solid rgba(255,255,255,0.1); padding: 9px 14px; color: #ddd; }
+    tr:nth-child(even) td { background: rgba(108,99,255,0.1); }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .step-num {
+      background: #6C63FF;
+      color: white;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+    .step-text { color: #ccc; font-size: 0.92em; line-height: 1.5; }
+    .step-text strong { color: #fff; }
+
+    code { background: rgba(0,0,0,0.4); border-radius: 4px; padding: 2px 8px; font-family: Consolas, monospace; color: #00D4AA; font-size: 0.88em; }
+    pre { background: rgba(0,0,0,0.5); border-left: 3px solid #6C63FF; border-radius: 6px; padding: 14px 18px; font-family: Consolas, monospace; color: #00D4AA; font-size: 0.85em; line-height: 1.6; width: 100%; }
+
+    .stat-box { text-align: center; padding: 20px; }
+    .stat-box .num { font-size: 2.8em; color: #00D4AA; font-weight: bold; }
+    .stat-box .label { color: #aaa; font-size: 0.9em; margin-top: 4px; }
+
+    .tag { display: inline-block; background: rgba(108,99,255,0.3); border-radius: 6px; padding: 3px 10px; font-size: 0.78em; color: #a0a0ff; margin: 2px; }
+
+    .footer { position: fixed; bottom: 10px; right: 20px; color: rgba(255,255,255,0.2); font-size: 0.75em; }
+
+    @media print {
+      .slide { min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide slide-cover">
+  <h1 class="cover-title">Media<span>Pulse</span> Insights</h1>
+  <p class="cover-sub">Social Media Analytics &amp; Campaign Management Platform</p>
+  <div style="margin: 20px 0;">
+    <span class="cover-tag">Angular 17</span>
+    <span class="cover-tag">Spring Boot 3.2</span>
+    <span class="cover-tag">MySQL</span>
+    <span class="cover-tag">JWT Auth</span>
+    <span class="cover-tag">REST API</span>
+  </div>
+  <p style="color:#aaa; margin-top: 30px; font-size:0.9em;">Version 1.0 &nbsp;|&nbsp; 2026</p>
+</div>
+
+<!-- SLIDE 2: WHAT IS MEDIAPULSE -->
+<div class="slide slide-dark">
+  <div class="slide-title">What is <span>MediaPulse</span>?</div>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h3>The Problem</h3>
+        <ul>
+          <li>Marketing teams manage multiple social media platforms separately</li>
+          <li>No single view to track campaign performance</li>
+          <li>Difficult to analyze audience demographics across platforms</li>
+          <li>No role-based access for team members</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Our Solution</h3>
+        <ul>
+          <li>Unified dashboard for all social media analytics</li>
+          <li>Real-time KPI tracking across Facebook, Twitter, Instagram, LinkedIn</li>
+          <li>Role-based access for 5 different user types</li>
+          <li>Campaign management from creation to completion</li>
+          <li>Audience insights: age, gender, location, device</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: KEY STATS -->
+<div class="slide slide-purple">
+  <div class="slide-title">Project at a <span>Glance</span></div>
+  <div class="three-col" style="margin-bottom: 30px;">
+    <div class="stat-box">
+      <div class="num">4+</div>
+      <div class="label">Social Platforms</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">8</div>
+      <div class="label">Database Tables</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">50+</div>
+      <div class="label">KPI Metrics</div>
+    </div>
+  </div>
+  <div class="three-col">
+    <div class="stat-box">
+      <div class="num">5</div>
+      <div class="label">User Roles</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">9</div>
+      <div class="label">API Endpoints</div>
+    </div>
+    <div class="stat-box">
+      <div class="num">6</div>
+      <div class="label">Frontend Pages</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: TECH STACK -->
+<div class="slide slide-dark">
+  <div class="slide-title">Technology <span>Stack</span></div>
+  <div style="text-align: center; margin-bottom: 24px;">
+    <div class="tech-badge">Angular 17 <span>Frontend Framework</span></div>
+    <div class="tech-badge">TypeScript 5.2 <span>Frontend Language</span></div>
+    <div class="tech-badge">Spring Boot 3.2 <span>Backend Framework</span></div>
+    <div class="tech-badge">Java 17 <span>Backend Language</span></div>
+    <div class="tech-badge">MySQL 8.x <span>Database</span></div>
+    <div class="tech-badge">JWT <span>Authentication</span></div>
+    <div class="tech-badge">BCrypt <span>Password Hashing</span></div>
+    <div class="tech-badge">Spring Security <span>Authorization</span></div>
+    <div class="tech-badge">Spring Data JPA <span>ORM / Database</span></div>
+    <div class="tech-badge">Maven <span>Build Tool</span></div>
+    <div class="tech-badge">Angular CLI <span>Frontend Build</span></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: PROJECT STRUCTURE -->
+<div class="slide slide-purple">
+  <div class="slide-title">Project <span>Architecture</span></div>
+  <div class="three-col">
+    <div class="card">
+      <h3>Frontend (Angular 17)</h3>
+      <ul>
+        <li>Components: Login, Signup, Dashboard, Campaigns, Analytics, Audience</li>
+        <li>Services: AuthService, DashboardService, CampaignService</li>
+        <li>AuthGuard — protects private routes</li>
+        <li>JWT Interceptor — auto-injects token</li>
+        <li>Reactive Forms with validation</li>
+        <li>Port: 4200</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Backend (Spring Boot)</h3>
+      <ul>
+        <li>REST Controllers for each module</li>
+        <li>AuthService with BCrypt &amp; JWT</li>
+        <li>Spring Security configuration</li>
+        <li>JPA Entities &amp; Repositories</li>
+        <li>Global Exception Handler</li>
+        <li>Port: 3000</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Database (MySQL)</h3>
+      <ul>
+        <li>8 tables: users, campaigns, posts, kpis, platforms, audience_insights, reports</li>
+        <li>Pre-loaded mock data</li>
+        <li>Foreign key relationships</li>
+        <li>Role-based user system</li>
+        <li>DB: mediapulse_db</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: DATABASE DESIGN -->
+<div class="slide slide-teal">
+  <div class="slide-title">Database <span>Design</span></div>
+  <table>
+    <tr><th>#</th><th>Table</th><th>Purpose</th><th>Key Columns</th></tr>
+    <tr><td>1</td><td>users</td><td>User accounts &amp; roles</td><td>id, full_name, email, password_hash, role</td></tr>
+    <tr><td>2</td><td>social_media_platforms</td><td>Connected platforms</td><td>id, name, api_key, account_name</td></tr>
+    <tr><td>3</td><td>campaigns</td><td>Marketing campaigns</td><td>id, name, budget, status, start_date, end_date</td></tr>
+    <tr><td>4</td><td>campaign_platforms</td><td>Campaign ↔ Platform mapping</td><td>campaign_id, platform_id</td></tr>
+    <tr><td>5</td><td>posts</td><td>Social media posts</td><td>id, campaign_id, platform_id, media_type</td></tr>
+    <tr><td>6</td><td>kpis</td><td>Engagement metrics</td><td>likes, shares, impressions, CTR, engagement_rate</td></tr>
+    <tr><td>7</td><td>audience_insights</td><td>Demographics</td><td>age_group, gender, location, device_type</td></tr>
+    <tr><td>8</td><td>reports</td><td>Generated reports</td><td>id, title, report_type, data_json</td></tr>
+  </table>
+</div>
+
+<!-- SLIDE 7: AUTHENTICATION FLOW -->
+<div class="slide slide-dark">
+  <div class="slide-title">Authentication <span>Flow</span></div>
+  <div class="two-col">
+    <div>
+      <div class="flow-step"><div class="step-num">1</div><div class="step-text">User visits <strong>/signup</strong> and fills in Full Name, Email, Password, Role</div></div>
+      <div class="flow-step"><div class="step-num">2</div><div class="step-text">Frontend sends <strong>POST /api/auth/register</strong> to Spring Boot</div></div>
+      <div class="flow-step"><div class="step-num">3</div><div class="step-text">Backend <strong>hashes password with BCrypt</strong> and saves to <code>users</code> table</div></div>
+      <div class="flow-step"><div class="step-num">4</div><div class="step-text">User redirected to <strong>/login</strong> page</div></div>
+    </div>
+    <div>
+      <div class="flow-step"><div class="step-num">5</div><div class="step-text">User enters credentials → <strong>POST /api/auth/login</strong></div></div>
+      <div class="flow-step"><div class="step-num">6</div><div class="step-text">Backend verifies BCrypt hash → generates <strong>JWT token (7 days)</strong></div></div>
+      <div class="flow-step"><div class="step-num">7</div><div class="step-text">Token stored in <strong>localStorage</strong>, user redirected to <strong>/dashboard</strong></div></div>
+      <div class="flow-step"><div class="step-num">8</div><div class="step-text">All API calls include <code>Authorization: Bearer token</code> automatically</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: API ENDPOINTS -->
+<div class="slide slide-purple">
+  <div class="slide-title">API <span>Endpoints</span></div>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Auth</th></tr>
+    <tr><td>POST</td><td>/api/auth/register</td><td>Create new user account</td><td>No</td></tr>
+    <tr><td>POST</td><td>/api/auth/login</td><td>Login &amp; receive JWT token</td><td>No</td></tr>
+    <tr><td>GET</td><td>/api/auth/me</td><td>Get current user info</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/dashboard/summary</td><td>Dashboard stats</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/campaigns</td><td>All campaigns list</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/campaigns/:id</td><td>Single campaign details</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/analytics/kpis</td><td>KPI metrics data</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/analytics/platforms</td><td>Platform performance</td><td>Yes</td></tr>
+    <tr><td>GET</td><td>/api/audience/insights</td><td>Audience demographics</td><td>Yes</td></tr>
+  </table>
+</div>
+
+<!-- SLIDE 9: HOW TO RUN -->
+<div class="slide slide-teal">
+  <div class="slide-title">How to <span>Run</span> the Project</div>
+  <div class="three-col">
+    <div class="card">
+      <h3>Step 1 — Database</h3>
+      <pre>mysql -u root -p
+source schema.sql</pre>
+      <p style="margin-top:10px;">Creates <code>mediapulse_db</code> with all tables and mock data</p>
+    </div>
+    <div class="card">
+      <h3>Step 2 — Backend (Terminal 1)</h3>
+      <pre>cd backend-spring
+mvn spring-boot:run</pre>
+      <p style="margin-top:10px;">Starts at <code>http://localhost:3000</code></p>
+    </div>
+    <div class="card">
+      <h3>Step 3 — Frontend (Terminal 2)</h3>
+      <pre>cd frontend
+npm install
+npm start</pre>
+      <p style="margin-top:10px;">Starts at <code>http://localhost:4200</code></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: USER ROLES & CREDENTIALS -->
+<div class="slide slide-dark">
+  <div class="slide-title">User Roles &amp; <span>Credentials</span></div>
+  <table>
+    <tr><th>Name</th><th>Email</th><th>Password</th><th>Role</th></tr>
+    <tr><td>Admin User</td><td>admin@mediapulse.com</td><td>Password@123</td><td>Admin</td></tr>
+    <tr><td>Sarah Johnson</td><td>sarah@mediapulse.com</td><td>Password@123</td><td>Marketing Team</td></tr>
+    <tr><td>David Lee</td><td>david@mediapulse.com</td><td>Password@123</td><td>Content Creator</td></tr>
+    <tr><td>Emily Chen</td><td>emily@mediapulse.com</td><td>Password@123</td><td>Executive</td></tr>
+    <tr><td>Mark Thompson</td><td>mark@mediapulse.com</td><td>Password@123</td><td>IT Support</td></tr>
+  </table>
+  <p style="margin-top: 20px; color:#aaa; font-size:0.85em;">* Passwords are stored as BCrypt hashes in the database. New accounts can be created via the Signup page.</p>
+</div>
+
+<!-- SLIDE 11: THANK YOU -->
+<div class="slide slide-cover" style="text-align:center;">
+  <h1 class="cover-title">Thank <span>You</span></h1>
+  <p class="cover-sub">MediaPulse Insights — Unified Social Media Analytics</p>
+  <div style="margin-top: 30px;">
+    <span class="cover-tag">Frontend: http://localhost:4200</span>
+    <span class="cover-tag">Backend: http://localhost:3000</span>
+  </div>
+  <p style="color:#aaa; margin-top: 40px; font-size: 0.85em;">Built with Angular 17 · Spring Boot 3.2 · MySQL · JWT</p>
+</div>
+
+</body>
+</html>

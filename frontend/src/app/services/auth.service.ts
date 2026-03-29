@@ -13,11 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   register(payload: RegisterPayload): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, payload).pipe(
-      tap(res => {
-        if (res.success) this.saveSession(res);
-      })
-    );
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, payload);
   }
 
   login(payload: LoginPayload): Observable<AuthResponse> {
