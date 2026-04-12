@@ -1,5 +1,6 @@
 package com.mediapulse.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
+    @JsonProperty("full_name")
     @NotBlank(message = "Full name is required.")
     private String full_name;
 

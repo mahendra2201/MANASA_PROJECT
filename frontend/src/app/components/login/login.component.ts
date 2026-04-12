@@ -44,7 +44,8 @@ export class LoginComponent {
     this.auth.login(this.loginForm.value).subscribe({
       next: () => {
         this.isLoading = false;
-        this.router.navigate(['/dashboard']);
+        const user = this.auth.getCurrentUser();
+        this.router.navigate([this.auth.getDashboardRoute(user?.role)]);
       },
       error: (err) => {
         this.isLoading    = false;

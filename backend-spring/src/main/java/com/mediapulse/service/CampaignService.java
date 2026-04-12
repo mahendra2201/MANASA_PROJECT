@@ -18,14 +18,18 @@ public class CampaignService {
 
     public Map<String, Object> getAll() {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(
-                "SELECT c.*, u.full_name AS created_by_name, " +
+                "SELECT c.id, c.name, c.description, c.start_date, c.end_date, c.budget, " +
+                "  c.target_audience, c.objectives, c.status, c.created_by, c.created_at, c.updated_at, " +
+                "  ANY_VALUE(u.full_name) AS created_by_name, " +
                 "  COALESCE(SUM(k.likes+k.shares+k.comments),0) AS total_engagement, " +
+                "  COALESCE(ROUND(AVG(k.engagement_rate),2),0) AS avg_engagement_rate, " +
                 "  COUNT(DISTINCT p.id) AS post_count " +
                 "FROM campaigns c " +
                 "LEFT JOIN users u ON u.id = c.created_by " +
                 "LEFT JOIN posts p ON p.campaign_id = c.id " +
                 "LEFT JOIN kpis k ON k.post_id = p.id " +
-                "GROUP BY c.id " +
+                "GROUP BY c.id, c.name, c.description, c.start_date, c.end_date, c.budget, " +
+                "  c.target_audience, c.objectives, c.status, c.created_by, c.created_at, c.updated_at " +
                 "ORDER BY c.created_at DESC"
         );
 

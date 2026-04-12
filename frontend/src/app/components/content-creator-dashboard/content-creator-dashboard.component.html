@@ -1,0 +1,281 @@
+<div class="layout">
+  <div class="overlay" [class.visible]="sidebarOpen" (click)="closeSidebar()"></div>
+  <div class="sidebar" [class.open]="sidebarOpen">
+    <button class="sidebar-close" (click)="closeSidebar()" aria-label="Close menu">✕</button>
+    <div class="logo">Media<span>Pulse</span><div class="logo-sub">Content Creator View</div></div>
+
+    <div class="nav-section">Overview</div>
+    <div class="nav-item" [class.active]="activeSection === 'dashboard'" (click)="setSection('dashboard')">
+      <span class="nav-icon">◈</span> My Dashboard
+      <span class="live-badge" *ngIf="activeSection === 'dashboard'">LIVE</span>
+    </div>
+    <div class="nav-item" [class.active]="activeSection === 'posts'" (click)="setSection('posts')">
+      <span class="nav-icon">✦</span> My Posts
+    </div>
+    <div class="nav-item" [class.active]="activeSection === 'trends'" (click)="setSection('trends')">
+      <span class="nav-icon">◎</span> Trends
+    </div>
+
+    <div class="nav-section" style="margin-top:16px;">Audience</div>
+    <div class="nav-item" [class.active]="activeSection === 'demographics'" (click)="setSection('demographics')">
+      <span class="nav-icon">♟</span> Demographics
+    </div>
+
+    <div class="sidebar-footer" (click)="logout()" title="Logout" style="cursor:pointer;">
+      <div class="user-name">{{ user?.full_name }}</div>
+      <div class="user-role">Content Creator</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" (click)="toggleSidebar()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="page-title">Content <span>Performance</span></div>
+      <div class="topbar-right">
+        <div class="filter-pill active">This Quarter</div>
+        <div class="filter-pill">This Month</div>
+        <div class="filter-pill">All Time</div>
+        <div class="avatar-sm" (click)="logout()" title="Logout" style="cursor:pointer;">{{ initials }}</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ─── MY DASHBOARD SECTION ─── -->
+      <div *ngIf="activeSection === 'dashboard'">
+        <div class="kpi-strip">
+          <div class="kpi">
+            <div class="kpi-emoji">👁</div>
+            <div class="kpi-label">Total Impressions</div>
+            <div class="kpi-num">2.4M</div>
+            <div class="kpi-tag tag-up">▲ 18.3% growth</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-emoji">💬</div>
+            <div class="kpi-label">Avg Comments / Post</div>
+            <div class="kpi-num">1,048</div>
+            <div class="kpi-tag tag-up">▲ 9.6% growth</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-emoji">🔁</div>
+            <div class="kpi-label">Total Shares</div>
+            <div class="kpi-num">34.2K</div>
+            <div class="kpi-tag tag-up">▲ 14.2% growth</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-emoji">📈</div>
+            <div class="kpi-label">Avg Engagement Score</div>
+            <div class="kpi-num">83.4</div>
+            <div class="kpi-tag tag-up">▲ 5.8% growth</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── MY POSTS SECTION ─── -->
+      <div *ngIf="activeSection === 'posts'">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Post Performance Breakdown</div>
+              <div class="card-sub">All posts ranked by engagement</div>
+            </div>
+          </div>
+          <table class="post-table">
+            <thead>
+              <tr><th>#</th><th>Post Content</th><th>Type</th><th>Platform</th><th>Likes</th><th>Comments</th><th>Shares</th><th>Reach</th><th>Engagement</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td><td>Behind the scenes festive shoot</td>
+                <td><span class="media-tag tag-reel">Reel</span></td><td>Instagram</td>
+                <td>13,500</td><td>2,200</td><td>4,100</td><td>260K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:95px;"></div>95%</div></td>
+              </tr>
+              <tr>
+                <td>2</td><td>48-Hour Flash Sale starts NOW!</td>
+                <td><span class="media-tag tag-image">Image</span></td><td>Twitter</td>
+                <td>8,900</td><td>1,700</td><td>3,600</td><td>200K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:80px;"></div>80%</div></td>
+              </tr>
+              <tr>
+                <td>3</td><td>Smartwatch sold 1000 units in 24hrs</td>
+                <td><span class="media-tag tag-text">Text</span></td><td>Twitter</td>
+                <td>9,200</td><td>1,500</td><td>3,400</td><td>175K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:78px;"></div>78%</div></td>
+              </tr>
+              <tr>
+                <td>4</td><td>Festive gift bundles — order now!</td>
+                <td><span class="media-tag tag-image">Image</span></td><td>Instagram</td>
+                <td>8,700</td><td>1,300</td><td>2,500</td><td>165K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:72px;"></div>72%</div></td>
+              </tr>
+              <tr>
+                <td>5</td><td>Week 3 festive deals — new daily!</td>
+                <td><span class="media-tag tag-video">Video</span></td><td>Instagram</td>
+                <td>9,800</td><td>1,600</td><td>2,900</td><td>190K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:70px;"></div>70%</div></td>
+              </tr>
+              <tr>
+                <td>6</td><td>New smartwatch launch — pre-order!</td>
+                <td><span class="media-tag tag-image">Image</span></td><td>Twitter</td>
+                <td>6,700</td><td>890</td><td>2,100</td><td>140K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:58px;"></div>58%</div></td>
+              </tr>
+              <tr>
+                <td>7</td><td>How we helped 200+ businesses grow</td>
+                <td><span class="media-tag tag-article">Article</span></td><td>LinkedIn</td>
+                <td>2,100</td><td>430</td><td>980</td><td>58K</td>
+                <td><div class="eng-bar"><div class="eng-mini" style="width:40px;"></div>40%</div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── TRENDS SECTION ─── -->
+      <div *ngIf="activeSection === 'trends'">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Engagement Trend</div>
+                <div class="card-sub">Monthly likes + comments + shares across all posts</div>
+              </div>
+            </div>
+            <div class="chart-box"><canvas id="cc-trendChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Content Type Performance</div>
+                <div class="card-sub">Which format drives most engagement</div>
+              </div>
+            </div>
+            <div class="type-list">
+              <div class="type-row">
+                <div class="type-meta"><span class="type-name">Reels</span><span class="type-val">9,800 avg engagement</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:96%;background:#7c3aed;"></div></div>
+              </div>
+              <div class="type-row">
+                <div class="type-meta"><span class="type-name">Video</span><span class="type-val">8,100 avg engagement</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:80%;background:#ff5c35;"></div></div>
+              </div>
+              <div class="type-row">
+                <div class="type-meta"><span class="type-name">Image</span><span class="type-val">6,200 avg engagement</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:61%;background:#d97706;"></div></div>
+              </div>
+              <div class="type-row">
+                <div class="type-meta"><span class="type-name">Article</span><span class="type-val">4,400 avg engagement</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:43%;background:#0891b2;"></div></div>
+              </div>
+              <div class="type-row">
+                <div class="type-meta"><span class="type-name">Text</span><span class="type-val">3,200 avg engagement</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:31%;background:#059669;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DEMOGRAPHICS SECTION ─── -->
+      <div *ngIf="activeSection === 'demographics'">
+        <div class="three-col">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Gender Split</div>
+                <div class="card-sub">Audience by gender</div>
+              </div>
+            </div>
+            <div class="donut-wrap">
+              <canvas id="cc-genderChart" width="140" height="140"></canvas>
+              <div class="gender-legend">
+                <span><span class="g-dot" style="background:#7c3aed;"></span>Female — 58%</span>
+                <span><span class="g-dot" style="background:#ff5c35;"></span>Male — 42%</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Age Groups</div>
+                <div class="card-sub">Who engages most</div>
+              </div>
+            </div>
+            <div class="age-bars">
+              <div class="age-row">
+                <div class="age-label">16–24</div>
+                <div class="age-track"><div class="age-fill" style="width:72%;background:#ff5c35;"></div></div>
+                <div class="age-pct">72%</div>
+              </div>
+              <div class="age-row">
+                <div class="age-label">25–34</div>
+                <div class="age-track"><div class="age-fill" style="width:85%;background:#7c3aed;"></div></div>
+                <div class="age-pct">85%</div>
+              </div>
+              <div class="age-row">
+                <div class="age-label">35–44</div>
+                <div class="age-track"><div class="age-fill" style="width:54%;background:#d97706;"></div></div>
+                <div class="age-pct">54%</div>
+              </div>
+              <div class="age-row">
+                <div class="age-label">45–55</div>
+                <div class="age-track"><div class="age-fill" style="width:38%;background:#059669;"></div></div>
+                <div class="age-pct">38%</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Top Cities</div>
+                <div class="card-sub">By avg engagement score</div>
+              </div>
+            </div>
+            <div class="city-list">
+              <div class="city-row">
+                <div class="city-rank gold">1</div>
+                <div class="city-name">Mumbai</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:100%;"></div></div>
+                <div class="city-score">93.2</div>
+              </div>
+              <div class="city-row">
+                <div class="city-rank gold">2</div>
+                <div class="city-name">Hyderabad</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:92%;"></div></div>
+                <div class="city-score">88.4</div>
+              </div>
+              <div class="city-row">
+                <div class="city-rank">3</div>
+                <div class="city-name">Delhi</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:85%;"></div></div>
+                <div class="city-score">85.2</div>
+              </div>
+              <div class="city-row">
+                <div class="city-rank">4</div>
+                <div class="city-name">Bangalore</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:80%;"></div></div>
+                <div class="city-score">83.1</div>
+              </div>
+              <div class="city-row">
+                <div class="city-rank">5</div>
+                <div class="city-name">Pune</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:75%;"></div></div>
+                <div class="city-score">77.4</div>
+              </div>
+              <div class="city-row">
+                <div class="city-rank">6</div>
+                <div class="city-name">Chennai</div>
+                <div class="city-bar"><div class="city-bar-fill" style="width:68%;"></div></div>
+                <div class="city-score">71.8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,237 @@
+<div class="layout">
+  <div class="overlay" [class.visible]="sidebarOpen" (click)="closeSidebar()"></div>
+  <div class="sidebar" [class.open]="sidebarOpen">
+    <button class="sidebar-close" (click)="closeSidebar()" aria-label="Close menu">✕</button>
+    <div class="logo">
+      <div class="logo-main">MediaPulse</div>
+      <div class="logo-sub">Executive Command</div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="nav-label">Strategic View</div>
+    <div class="nav-item" [class.active]="activeSection === 'overview'" (click)="setSection('overview')">
+      ◈ &nbsp;Executive Overview
+      <div class="nav-dot" *ngIf="activeSection === 'overview'"></div>
+    </div>
+    <div class="nav-item" [class.active]="activeSection === 'brand'" (click)="setSection('brand')">
+      ◎ &nbsp;Brand Performance
+    </div>
+    <div class="nav-item" [class.active]="activeSection === 'roi'" (click)="setSection('roi')">
+      ⊞ &nbsp;Campaign ROI
+    </div>
+
+    <div class="nav-label" style="margin-top:16px;">Reports</div>
+    <div class="nav-item" [class.active]="activeSection === 'reports'" (click)="setSection('reports')">
+      ↗ &nbsp;Budget Reports
+    </div>
+
+    <div class="sidebar-footer" (click)="logout()" title="Logout" style="cursor:pointer;">
+      <div class="exec-name">{{ user?.full_name }}</div>
+      <div class="exec-role">Chief Executive</div>
+      <div class="exec-badge">C-Suite Access</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" (click)="toggleSidebar()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="page-title">Executive <span>Command Centre</span></div>
+      <div class="topbar-meta">
+        <div class="date-text">Q4 2025 — Strategic Overview</div>
+        <div class="live-pill"><div class="live-dot"></div>Live Data</div>
+        <div class="exec-avatar" (click)="logout()" title="Logout" style="cursor:pointer;">{{ initials }}</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ─── OVERVIEW SECTION ─── -->
+      <div *ngIf="activeSection === 'overview'">
+        <div class="scorecard-strip">
+          <div class="scorecard">
+            <div class="sc-accent">₹</div>
+            <div class="sc-label">Total Budget Deployed</div>
+            <div class="sc-value">₹57.5K</div>
+            <div class="sc-change neu">Across 8 campaigns</div>
+          </div>
+          <div class="scorecard">
+            <div class="sc-accent">↗</div>
+            <div class="sc-label">Overall Reach</div>
+            <div class="sc-value">1.84M</div>
+            <div class="sc-change up">▲ 21% QoQ growth</div>
+          </div>
+          <div class="scorecard">
+            <div class="sc-accent">◎</div>
+            <div class="sc-label">Brand Engagement Rate</div>
+            <div class="sc-value">6.8%</div>
+            <div class="sc-change up">▲ Industry avg: 3.2%</div>
+          </div>
+          <div class="scorecard">
+            <div class="sc-accent">✦</div>
+            <div class="sc-label">Total Impressions</div>
+            <div class="sc-value">2.41M</div>
+            <div class="sc-change up">▲ 18.3% vs last Q</div>
+          </div>
+          <div class="scorecard">
+            <div class="sc-accent">⚡</div>
+            <div class="sc-label">Cost Per Engagement</div>
+            <div class="sc-value">₹0.36</div>
+            <div class="sc-change up">▲ Down from ₹0.52</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-title">Revenue &amp; Reach Growth</div>
+          <div class="card-sub">Monthly reach vs engagement — full year 2025</div>
+          <div class="chart-box"><canvas id="exec-lineChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ─── BRAND PERFORMANCE SECTION ─── -->
+      <div *ngIf="activeSection === 'brand'">
+        <div class="top-row">
+          <div class="card">
+            <div class="card-title">Platform ROI</div>
+            <div class="card-sub">Reach generated per platform</div>
+            <div class="platform-grid">
+              <div class="plat-row">
+                <div class="plat-name">Instagram</div>
+                <div class="plat-track"><div class="plat-fill" style="width:92%;background:var(--gold);"></div></div>
+                <div class="plat-pct" style="color:var(--gold);">835K</div>
+              </div>
+              <div class="plat-row">
+                <div class="plat-name">Twitter</div>
+                <div class="plat-track"><div class="plat-fill" style="width:63%;background:var(--teal);"></div></div>
+                <div class="plat-pct" style="color:var(--teal);">580K</div>
+              </div>
+              <div class="plat-row">
+                <div class="plat-name">Facebook</div>
+                <div class="plat-track"><div class="plat-fill" style="width:27%;background:#7c7cff;"></div></div>
+                <div class="plat-pct" style="color:#7c7cff;">248K</div>
+              </div>
+              <div class="plat-row">
+                <div class="plat-name">LinkedIn</div>
+                <div class="plat-track"><div class="plat-fill" style="width:19%;background:var(--muted);"></div></div>
+                <div class="plat-pct" style="color:var(--muted);">175K</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Brand Health Scorecard</div>
+            <div class="card-sub">Key strategic metrics — Q4 2025</div>
+            <div class="health-grid">
+              <div class="health-card">
+                <div class="health-metric">Audience Reach Score</div>
+                <div class="health-val" style="color:var(--green);">91 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:91%;background:var(--green);"></div></div>
+              </div>
+              <div class="health-card">
+                <div class="health-metric">Content Quality Index</div>
+                <div class="health-val" style="color:var(--gold);">84 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:84%;background:var(--gold);"></div></div>
+              </div>
+              <div class="health-card">
+                <div class="health-metric">Audience Loyalty Rate</div>
+                <div class="health-val" style="color:var(--teal);">76 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:76%;background:var(--teal);"></div></div>
+              </div>
+              <div class="health-card">
+                <div class="health-metric">Campaign Efficiency</div>
+                <div class="health-val" style="color:var(--gold);">88 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:88%;background:var(--gold);"></div></div>
+              </div>
+              <div class="health-card">
+                <div class="health-metric">Market Penetration</div>
+                <div class="health-val" style="color:#7c7cff;">67 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:67%;background:#7c7cff;"></div></div>
+              </div>
+              <div class="health-card">
+                <div class="health-metric">Platform Diversification</div>
+                <div class="health-val" style="color:var(--red);">58 <span style="font-size:12px;color:var(--muted);">/ 100</span></div>
+                <div class="health-bar"><div class="health-fill" style="width:58%;background:var(--red);"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CAMPAIGN ROI SECTION ─── -->
+      <div *ngIf="activeSection === 'roi'">
+        <div class="card">
+          <div class="card-title">Strategic Campaign Analysis</div>
+          <div class="card-sub">ROI, reach, and recommendation per campaign</div>
+          <table class="strat-table">
+            <thead>
+              <tr><th>Campaign</th><th>Reach</th><th>ROI</th><th>Trend</th><th>Decision</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Festive Season</td><td>835K</td>
+                <td><span class="roi-val" style="color:var(--green);">3.8×</span></td>
+                <td><div class="spark"><div class="spark-bar" style="height:8px;"></div><div class="spark-bar" style="height:12px;"></div><div class="spark-bar" style="height:16px;"></div><div class="spark-bar hi" style="height:22px;"></div></div></td>
+                <td><span class="pill pill-green">Scale Up</span></td>
+              </tr>
+              <tr>
+                <td>Flash Sale</td><td>352K</td>
+                <td><span class="roi-val" style="color:var(--green);">3.2×</span></td>
+                <td><div class="spark"><div class="spark-bar" style="height:6px;"></div><div class="spark-bar" style="height:10px;"></div><div class="spark-bar hi" style="height:22px;"></div><div class="spark-bar" style="height:14px;"></div></div></td>
+                <td><span class="pill pill-green">Repeat</span></td>
+              </tr>
+              <tr>
+                <td>New Product Launch</td><td>430K</td>
+                <td><span class="roi-val" style="color:var(--gold);">2.7×</span></td>
+                <td><div class="spark"><div class="spark-bar" style="height:14px;"></div><div class="spark-bar hi" style="height:22px;"></div><div class="spark-bar" style="height:18px;"></div><div class="spark-bar" style="height:10px;"></div></div></td>
+                <td><span class="pill pill-gold">Maintain</span></td>
+              </tr>
+              <tr>
+                <td>Brand Awareness Q4</td><td>221K</td>
+                <td><span class="roi-val" style="color:var(--gold);">2.1×</span></td>
+                <td><div class="spark"><div class="spark-bar" style="height:10px;"></div><div class="spark-bar" style="height:14px;"></div><div class="spark-bar" style="height:12px;"></div><div class="spark-bar hi" style="height:18px;"></div></div></td>
+                <td><span class="pill pill-gold">Maintain</span></td>
+              </tr>
+              <tr>
+                <td>B2B Lead Gen</td><td>193K</td>
+                <td><span class="roi-val" style="color:var(--gold);">1.9×</span></td>
+                <td><div class="spark"><div class="spark-bar hi" style="height:16px;"></div><div class="spark-bar" style="height:12px;"></div><div class="spark-bar" style="height:10px;"></div><div class="spark-bar" style="height:8px;"></div></div></td>
+                <td><span class="pill pill-gold">Review</span></td>
+              </tr>
+              <tr>
+                <td>Back to College</td><td>103K</td>
+                <td><span class="roi-val" style="color:var(--red);">1.2×</span></td>
+                <td><div class="spark"><div class="spark-bar hi" style="height:14px;"></div><div class="spark-bar" style="height:10px;"></div><div class="spark-bar" style="height:8px;"></div><div class="spark-bar" style="height:6px;"></div></div></td>
+                <td><span class="pill pill-red">Reduce</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ─── REPORTS SECTION ─── -->
+      <div *ngIf="activeSection === 'reports'">
+        <div class="top-row">
+          <div class="card">
+            <div class="card-title">Budget vs Status</div>
+            <div class="card-sub">All 8 campaigns</div>
+            <div class="budget-list">
+              <div class="budget-row"><span class="budget-name">Festive Season</span><div style="text-align:right"><div class="budget-amt">₹12K</div><div class="budget-status st-active">● Active</div></div></div>
+              <div class="budget-row"><span class="budget-name">New Product Launch</span><div style="text-align:right"><div class="budget-amt">₹8K</div><div class="budget-status st-done">Completed</div></div></div>
+              <div class="budget-row"><span class="budget-name">Brand Awareness Q4</span><div style="text-align:right"><div class="budget-amt">₹9.5K</div><div class="budget-status st-active">● Active</div></div></div>
+              <div class="budget-row"><span class="budget-name">B2B Lead Gen</span><div style="text-align:right"><div class="budget-amt">₹7.5K</div><div class="budget-status st-done">Completed</div></div></div>
+              <div class="budget-row"><span class="budget-name">Year End Promo</span><div style="text-align:right"><div class="budget-amt">₹6K</div><div class="budget-status st-active">● Active</div></div></div>
+              <div class="budget-row"><span class="budget-name">Summer Sale</span><div style="text-align:right"><div class="budget-amt">₹5K</div><div class="budget-status st-done">Completed</div></div></div>
+              <div class="budget-row"><span class="budget-name">Back to College</span><div style="text-align:right"><div class="budget-amt">₹4.5K</div><div class="budget-status st-done">Completed</div></div></div>
+              <div class="budget-row"><span class="budget-name">Flash Sale</span><div style="text-align:right"><div class="budget-amt">₹3K</div><div class="budget-status st-done">Completed</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Campaign Budget Utilisation</div>
+            <div class="card-sub">Budget vs reach generated per platform</div>
+            <div class="chart-box" style="height:220px;"><canvas id="exec-budgetBar"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

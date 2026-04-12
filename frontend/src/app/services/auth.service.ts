@@ -18,9 +18,7 @@ export class AuthService {
 
   login(payload: LoginPayload): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, payload).pipe(
-      tap(res => {
-        if (res.success) this.saveSession(res);
-      })
+      tap(res => { if (res.success) this.saveSession(res); })
     );
   }
 
@@ -41,6 +39,17 @@ export class AuthService {
   getCurrentUser(): User | null {
     const user = localStorage.getItem('mp_user');
     return user ? JSON.parse(user) : null;
+  }
+
+  getDashboardRoute(role?: string): string {
+    const map: { [key: string]: string } = {
+      'marketing_team':  '/dashboard/marketing',
+      'content_creator': '/dashboard/content-creator',
+      'executive':       '/dashboard/executive',
+      'it_support':      '/dashboard/it-support',
+      'admin':           '/dashboard/marketing'
+    };
+    return map[role || ''] || '/dashboard/marketing';
   }
 
   private saveSession(res: AuthResponse): void {

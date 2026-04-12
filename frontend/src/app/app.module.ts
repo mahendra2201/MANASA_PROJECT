@@ -12,6 +12,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CampaignsComponent } from './components/campaigns/campaigns.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { AudienceComponent } from './components/audience/audience.component';
+import { MarketingDashboardComponent } from './components/marketing-dashboard/marketing-dashboard.component';
+import { ContentCreatorDashboardComponent } from './components/content-creator-dashboard/content-creator-dashboard.component';
+import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
+import { ItSupportDashboardComponent } from './components/it-support-dashboard/it-support-dashboard.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
@@ -23,7 +27,11 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     DashboardComponent,
     CampaignsComponent,
     AnalyticsComponent,
-    AudienceComponent
+    AudienceComponent,
+    MarketingDashboardComponent,
+    ContentCreatorDashboardComponent,
+    ExecutiveDashboardComponent,
+    ItSupportDashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -153,13 +153,14 @@ CREATE TABLE IF NOT EXISTS reports (
 -- MOCK DATA
 -- ============================================================
 
--- Users (passwords: all are 'Password@123' - bcrypt hashed with Spring BCryptPasswordEncoder)
+-- Users (passwords: all are 'Password@123' - bcrypt hashed with Spring BCryptPasswordEncoder $2a$)
+-- NOTE: DataInitializer.java will re-encode these on first startup to ensure compatibility
 INSERT IGNORE INTO users (full_name, email, password_hash, role) VALUES
-('Admin User',     'admin@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'admin'),
-('Sarah Johnson',  'sarah@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'marketing_team'),
-('David Lee',      'david@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'content_creator'),
-('Emily Chen',     'emily@mediapulse.com',    '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'executive'),
-('Mark Thompson',  'mark@mediapulse.com',     '$2b$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'it_support');
+('Admin User',     'admin@mediapulse.com',    '$2a$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'admin'),
+('Sarah Johnson',  'sarah@mediapulse.com',    '$2a$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'marketing_team'),
+('David Lee',      'david@mediapulse.com',    '$2a$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'content_creator'),
+('Emily Chen',     'emily@mediapulse.com',    '$2a$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'executive'),
+('Mark Thompson',  'mark@mediapulse.com',     '$2a$10$ICiWKA1EXaDUtjP0.GTGMu2lVHv1a1ziQlFkXgdq4YzrgpXe4U1ei', 'it_support');
 
 -- Social Media Platforms
 INSERT IGNORE INTO social_media_platforms (name, api_key, account_name, account_id, platform_url) VALUES

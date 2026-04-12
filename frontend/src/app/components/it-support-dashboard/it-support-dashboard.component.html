@@ -1,0 +1,271 @@
+<div class="layout">
+  <div class="overlay" [class.visible]="sidebarOpen" (click)="closeSidebar()"></div>
+  <div class="sidebar" [class.open]="sidebarOpen">
+    <button class="sidebar-close" (click)="closeSidebar()" aria-label="Close menu">✕</button>
+    <div class="logo">
+      <div class="logo-top">// MEDIAPULSE</div>
+      <div class="logo-sub">IT_SUPPORT_CONSOLE v2.4</div>
+    </div>
+    <div class="sys-status">
+      <div class="sys-status-title">system_status</div>
+      <div class="sys-row"><span class="sys-label">DB_SERVER</span><span class="sys-val ok">ONLINE</span></div>
+      <div class="sys-row"><span class="sys-label">API_GATEWAY</span><span class="sys-val ok">ONLINE</span></div>
+      <div class="sys-row"><span class="sys-label">FIREWALL</span><span class="sys-val ok">ACTIVE</span></div>
+      <div class="sys-row"><span class="sys-label">SSL_CERT</span><span class="sys-val warn">EXP: 14d</span></div>
+      <div class="sys-row"><span class="sys-label">BACKUP</span><span class="sys-val ok">SYNCED</span></div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">// monitor</div>
+      <div class="nav-item" [class.active]="activeSection === 'overview'" (click)="setSection('overview')">
+        ◈ &nbsp;System Overview
+        <div class="nav-ping" [class.ping-ok]="activeSection === 'overview'"></div>
+      </div>
+      <div class="nav-item" [class.active]="activeSection === 'api'" (click)="setSection('api')">
+        ⊞ &nbsp;API Integrations
+        <div class="nav-ping ping-ok"></div>
+      </div>
+      <div class="nav-item" [class.active]="activeSection === 'security'" (click)="setSection('security')">
+        ⚡ &nbsp;Security Events
+        <div class="nav-ping ping-warn"></div>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">// manage</div>
+      <div class="nav-item" [class.active]="activeSection === 'privacy'" (click)="setSection('privacy')">
+        ◎ &nbsp;Data Privacy
+        <div class="nav-ping ping-ok"></div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer" (click)="logout()" title="Logout" style="cursor:pointer;">
+      <div class="sf-name">{{ user?.full_name }}</div>
+      <div class="sf-role">IT_SUPPORT_ENGINEER</div>
+      <div class="sf-uptime">● SYS_UPTIME: 99.7%</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <button class="hamburger" (click)="toggleSidebar()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="page-title">IT_SUPPORT <span>// System Control Panel</span></div>
+      <div class="topbar-right">
+        <div class="clock">{{ now | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+        <div class="alert-pill"><div class="alert-dot"></div>1 WARNING ACTIVE</div>
+        <div class="it-avatar" (click)="logout()" title="Logout" style="cursor:pointer;">{{ initials }}</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ─── SYSTEM OVERVIEW SECTION ─── -->
+      <div *ngIf="activeSection === 'overview'">
+        <div class="status-strip">
+          <div class="stat-card green">
+            <div class="stat-label">API Integrations</div>
+            <div class="stat-value">4/4</div>
+            <div class="stat-sub">All platforms online</div>
+          </div>
+          <div class="stat-card yellow">
+            <div class="stat-label">SSL Expiry</div>
+            <div class="stat-value">14d</div>
+            <div class="stat-sub">Renewal required</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">System Uptime</div>
+            <div class="stat-value">99.7%</div>
+            <div class="stat-sub">Last 30 days</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label">Active Users</div>
+            <div class="stat-value">24</div>
+            <div class="stat-sub">Sessions right now</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-label">Data Encrypted</div>
+            <div class="stat-value">100%</div>
+            <div class="stat-sub">AES-256 compliant</div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div class="card-title">SYSTEM_RESOURCES</div>
+          <div class="card-sub">// server performance metrics</div>
+          <div class="resource-list">
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">CPU Usage</span><span class="res-val" style="color:var(--green);">38%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:38%;background:var(--green);"></div></div>
+            </div>
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">Memory (RAM)</span><span class="res-val" style="color:var(--blue);">62%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:62%;background:var(--blue);"></div></div>
+            </div>
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">Disk Storage</span><span class="res-val" style="color:var(--yellow);">74%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:74%;background:var(--yellow);"></div></div>
+            </div>
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">Network I/O</span><span class="res-val" style="color:var(--green);">22%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:22%;background:var(--green);"></div></div>
+            </div>
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">DB Connections</span><span class="res-val" style="color:var(--purple);">45%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:45%;background:var(--purple);"></div></div>
+            </div>
+            <div class="res-row">
+              <div class="res-meta"><span class="res-name">API Throughput</span><span class="res-val" style="color:var(--green);">31%</span></div>
+              <div class="res-track"><div class="res-fill" style="width:31%;background:var(--green);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── API INTEGRATIONS SECTION ─── -->
+      <div *ngIf="activeSection === 'api'">
+        <div class="card">
+          <div class="card-title">PLATFORM_API_STATUS</div>
+          <div class="card-sub">// real-time integration health check</div>
+          <div class="api-list">
+            <div class="api-row">
+              <div class="api-status-dot" style="background:var(--green);box-shadow:0 0 6px var(--green);"></div>
+              <div class="api-name">Facebook</div>
+              <div class="api-url">graph.facebook.com/v18.0</div>
+              <div class="api-latency ok-c">142ms</div>
+              <div class="api-badge badge-ok">HEALTHY</div>
+            </div>
+            <div class="api-row">
+              <div class="api-status-dot" style="background:var(--green);box-shadow:0 0 6px var(--green);"></div>
+              <div class="api-name">Twitter / X</div>
+              <div class="api-url">api.twitter.com/2</div>
+              <div class="api-latency ok-c">198ms</div>
+              <div class="api-badge badge-ok">HEALTHY</div>
+            </div>
+            <div class="api-row">
+              <div class="api-status-dot" style="background:var(--yellow);box-shadow:0 0 6px var(--yellow);"></div>
+              <div class="api-name">Instagram</div>
+              <div class="api-url">graph.instagram.com</div>
+              <div class="api-latency warn-c">487ms</div>
+              <div class="api-badge badge-warn">SLOW</div>
+            </div>
+            <div class="api-row">
+              <div class="api-status-dot" style="background:var(--green);box-shadow:0 0 6px var(--green);"></div>
+              <div class="api-name">LinkedIn</div>
+              <div class="api-url">api.linkedin.com/v2</div>
+              <div class="api-latency ok-c">231ms</div>
+              <div class="api-badge badge-ok">HEALTHY</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="card-sub" style="margin-bottom:10px;">// api response time trend (ms)</div>
+            <div class="chart-box"><canvas id="it-apiChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SECURITY EVENTS SECTION ─── -->
+      <div *ngIf="activeSection === 'security'">
+        <div class="card">
+          <div class="card-title">SECURITY_EVENT_LOG</div>
+          <div class="card-sub">// live security and access events</div>
+          <div class="log-list">
+            <div class="log-item ok">
+              <div class="log-time">09:42</div>
+              <div class="log-msg">Backup completed successfully — mediapulse_db <span class="log-tag tag-ok">BACKUP</span></div>
+            </div>
+            <div class="log-item warn">
+              <div class="log-time">09:31</div>
+              <div class="log-msg">SSL certificate expiring in 14 days — action required <span class="log-tag tag-warn">SSL</span></div>
+            </div>
+            <div class="log-item info">
+              <div class="log-time">09:18</div>
+              <div class="log-msg">User login: {{ user?.email || 'user@mediapulse.com' }} <span class="log-tag tag-info">AUTH</span></div>
+            </div>
+            <div class="log-item info">
+              <div class="log-time">09:10</div>
+              <div class="log-msg">Instagram API latency spike detected — 487ms <span class="log-tag tag-warn">API</span></div>
+            </div>
+            <div class="log-item ok">
+              <div class="log-time">08:55</div>
+              <div class="log-msg">Firewall rules updated — 3 new rules applied <span class="log-tag tag-ok">FIREWALL</span></div>
+            </div>
+            <div class="log-item info">
+              <div class="log-time">08:40</div>
+              <div class="log-msg">New user session started — exec&#64;mediapulse.com <span class="log-tag tag-info">AUTH</span></div>
+            </div>
+            <div class="log-item ok">
+              <div class="log-time">08:22</div>
+              <div class="log-msg">All platform APIs responding normally <span class="log-tag tag-ok">HEALTH</span></div>
+            </div>
+            <div class="log-item error">
+              <div class="log-time">07:58</div>
+              <div class="log-msg">Failed login attempt — unknown IP 45.33.32.156 <span class="log-tag tag-err">THREAT</span></div>
+            </div>
+            <div class="log-item ok">
+              <div class="log-time">07:44</div>
+              <div class="log-msg">Database snapshot created — 2.4GB stored <span class="log-tag tag-ok">DB</span></div>
+            </div>
+            <div class="log-item info">
+              <div class="log-time">07:30</div>
+              <div class="log-msg">System health check passed — all services green <span class="log-tag tag-ok">SYSTEM</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DATA PRIVACY SECTION ─── -->
+      <div *ngIf="activeSection === 'privacy'">
+        <div class="row-3">
+          <div class="card">
+            <div class="card-title">DATA_PRIVACY_COMPLIANCE</div>
+            <div class="card-sub">// security and privacy metrics</div>
+            <div class="privacy-grid">
+              <div class="priv-card">
+                <div class="priv-label">Encrypted Records</div>
+                <div class="priv-val" style="color:var(--green);">100%</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:100%;background:var(--green);"></div></div>
+              </div>
+              <div class="priv-card">
+                <div class="priv-label">Access Control</div>
+                <div class="priv-val" style="color:var(--green);">Active</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:100%;background:var(--green);"></div></div>
+              </div>
+              <div class="priv-card">
+                <div class="priv-label">GDPR Compliance</div>
+                <div class="priv-val" style="color:var(--green);">98%</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:98%;background:var(--green);"></div></div>
+              </div>
+              <div class="priv-card">
+                <div class="priv-label">Audit Coverage</div>
+                <div class="priv-val" style="color:var(--blue);">94%</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:94%;background:var(--blue);"></div></div>
+              </div>
+              <div class="priv-card">
+                <div class="priv-label">Token Expiry</div>
+                <div class="priv-val" style="color:var(--yellow);">24h</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:70%;background:var(--yellow);"></div></div>
+              </div>
+              <div class="priv-card">
+                <div class="priv-label">Failed Logins</div>
+                <div class="priv-val" style="color:var(--red);">3</div>
+                <div class="priv-bar"><div class="priv-fill" style="width:15%;background:var(--red);"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">SYSTEM_UPTIME_CHART</div>
+            <div class="card-sub">// 7-day uptime history (%)</div>
+            <div class="chart-box"><canvas id="it-uptimeChart"></canvas></div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:7px;">
+              <div class="uptime-row"><span>DB Server</span><span style="color:var(--green);">● 99.9%</span></div>
+              <div class="uptime-row"><span>API Gateway</span><span style="color:var(--green);">● 99.7%</span></div>
+              <div class="uptime-row"><span>Web Server</span><span style="color:var(--green);">● 99.8%</span></div>
+              <div class="uptime-row"><span>Instagram API</span><span style="color:var(--yellow);">● 97.2%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
